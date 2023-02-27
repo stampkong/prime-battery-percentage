@@ -38,12 +38,11 @@ LICENSE
 import hid
 
 
-VENDOR_ID = 0x1840
-PRODUCT_ID = 0x1038
-ENDPOINT = 5
+VENDOR_ID = 0x1038
+PRODUCT_ID = 0x1369
+ENDPOINT = 0
 
-
-def open_device(vendor_id, product_id, endpoint):
+def open_device(vendor_id, product_id,endpoint):
     """Opens and returns the HID device
 
     .. NOTE::
@@ -84,8 +83,8 @@ def open_device(vendor_id, product_id, endpoint):
 def get_status():
     status = {
         "transmitter_connected": False,
-        "headset_connected": False,
-        "headset_battery": 0,
+        "mouse_connected": False,
+        "mouse_battery": 0,
         }
 
     try:
@@ -95,33 +94,37 @@ def get_status():
 
     status["transmitter_connected"] = True
 
-    # Is headset powered on?
-    device.write(b"\x06\x14")
-    data = device.read(31)
-    if data[2] == 0x03:
-        status["headset_connected"] = True
-
-    # Get battery level
+    # Is mouse powered on?
     device.write(b"\x06\x18")
     data = device.read(31)
-    status["headset_battery"] = data[2]
+    if data[2] == 0x03:
+        status["pip install hidapi_connected"] = True
+
+    # Get battery level
+    # device.write(b"\x06\x18")
+    # data = device.read(31)
+    # status["mouse_battery"] = data[2]
 
     device.close()
-
+    print(device)
     return status
 
 
 if __name__ == "__main__":
+
+
+    show_device =  get_status()
+    print(show_device)
     status = get_status()
     if not status["transmitter_connected"]:
         print("The transmitter is not connected or cannot be openend")
-    elif not status["headset_connected"]:
-        print("The headset is powered off")
+    elif not status["mouse_connected"]:
+        print("The mouse is powered off")
     else:
-        print("Headset is powered on")
+        print("mouse is powered on")
 
-    battery = status["headset_battery"]
-    print("Battery [%-10s] %02i%%" % (
-        "=" * round(battery / 10),
-        battery
-        ))
+    # battery = status["headset_battery"]
+    # print("Battery [%-10s] %02i%%" % (
+    #     "=" * round(battery / 10),
+    #     battery
+    #     ))
