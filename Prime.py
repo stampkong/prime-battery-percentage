@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 """
-This script displays the battery level of a SteelSeries Acrtis 7 headset.
+This script displays the battery level of a SteelSeries Prime Wireless mouse.
 
 
 USING
@@ -13,25 +13,7 @@ To use this script you must install hidapi (https://github.com/trezor/cython-hid
 
 and then running it using Python 3:
 
-    python3 ./arctis7.py
-
-
-ON LINUX
---------
-
-On Linux, you will have to run this script as root or to add new udev rules.
-To add the udev rules, just create the following file:
-
-    /etc/udev/rules.d/99-steelseries-arctis7.rules
-
-with the following content:
-
-    SUBSYSTEM=="hidraw", ATTRS{idVendor}=="1038", ATTRS{idProduct}=="12ad", MODE="0666"
-    SUBSYSTEM=="usb", ATTRS{idVendor}=="1038", ATTRS{idProduct}=="12ad", MODE="0666"
-
-Finally run the following command to update udev rules:
-
-    sudo udevadm trigger
+    python3 ./Prime.py
 
 
 LICENSE
